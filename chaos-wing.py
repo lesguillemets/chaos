@@ -27,6 +27,9 @@ class Wing(object):
     def set_b(self,b):
         self.b = b
 
+    def location(self):
+        return (self.x,self.y)
+
     def next_generation_arbitorary(self,x,y):
        x2 = y + (self.a * x) - (5.0/(x*x +1)) + (0.2*math.exp(-y*y)) + 6
        y2 = -self.b*x
@@ -82,6 +85,20 @@ class Wing(object):
         plt.close()
             
         return None
+
+def main():
+    a = -1.73875
+    b = 0.989
+    wing = Wing(a,b)
+    for i in xrange(-100,101):
+        for j in xrange(-100,101):
+            wing.set_x(i)
+            wing.set_y(j)
+            for n in range(1000):
+                f = file('generation-%03d.dat'%(n),'a')
+                f.write('%lf\t%lf\n'%(wing.location()))
+                f.close()
+                wing.next_generation()
 
 if __name__ == '__main__':
     main()
